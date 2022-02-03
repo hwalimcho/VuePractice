@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Vue.js sample</title>
+        <link rel="stylesheet" href="style.css" >
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
+
+        <script>
+            window.onload =function() {
+                new Vue({
+                    el: '#app',
+                    data: {
+                       price : 100,
+                       count : 1,
+                       myText: '오늘은 날씨가 좋습니다.',
+                       findWord: '',
+                       items : ['설악산', '한라산', ' 북한산', '백두산', '지리산'],
+                       R:255,
+                       G:150,
+                       B:100,
+                       forbiddenText:'안되',
+                       inputText: '오늘은 날씨가 좋습니다.',
+                       restSec: 5,
+                       timerObj: null,
+                       myNumber: 0,
+                       tweenedNumber: 0
+                    },
+                    methods: {
+                        startTimer:function(){
+                            //남은시간 5초
+                            this.restSec = 5;
+                            //타이머를 스타트, 1초(1000미리초)에 1씩 감소
+                            this.timerObj = setInterval(() => {this.restSec--}, 1000)
+                        }
+                    },
+                    computed:{
+                        //price나 count가 변하면 합계 금약을 계산한다.
+                        sum : function() {
+                            return this.price*this.count;
+                        },
+                        //합계 금액이 변하면 세금포함 금약을 계산한다.
+                        taxIncluded: function(){
+                           return this.price * 1.08 ;
+                        },
+                        //myText의 길이가 변하면 남은 글자수를 계산한다.
+                        remaining: function() {
+                            return 140-this.myText.length;
+                        },
+                        //remaining이 변하면 computedColor을 계산한다.
+                        computedColor: function(){
+                            col = "green";
+                            if(this.remaining < 20) {
+                                col = "orange";
+                            }
+                            if(this.remaining < 1) {
+                                col = "red";
+                            }
+                            return col;
+                        },
+                        //this.findWord가 변하면 그 문자가 포함된 리스트를 계산한다.
+                        findItems: function(){
+                            if(this.findWord) {
+                                return this.items.filter(function(value){
+                                    return (value.indexOf(this.findWord) > -1);
+                                }, this);
+                            }else {
+                                //this.findWord가 공백일 땐 리스트를 그대로 반환한다.
+                                return this.items;
+                            }
+                        },
+                        //R,G,B의 값이 변하면 색을 계산한다.
+                        mixColor: function(){
+                            var ans = "RGB("+this.R+","+this.G+","+this.B+")";
+                            return ans;
+                        },
+                        //tweenedNumber 값이 변경되는 변화 중 애니메이션을 산출한다.
+                        animeNumber: function(){
+                            return this.tweenedNumber.toFixed(0);
+                        }
+                    },
+                    watch: {
+                        //입력한 문자를 감지한다.
+                        inputText: function() {
+                            var pos = this.inputText.indexOf(this.forbiddenText);
+                            if(pos >= 0) {
+                                alert(this.forbiddenText + "는 입력할 수 없습니다.");
+                                //입력문자에서 금지문자를 삭제한다.
+                                 this.inputText=this.inputText.substr(0, pos);
+                            }
+                        },
+                        //남은 초를 감시한다.
+                        restSec : function(){
+                            //0초 이하가 되면 얼럿을 띄우고 타이머를 멈춘다.
+                            if(this.restSec <= 0) {
+                                alert("제한시간입니다.");
+                                clearInterval(this.timerObj);
+                            }
+                        },
+                        //myNumber를 감지하여 값이 변할 경우 실행한다.
+                        myNumber: function(){
+                            //data의 tweenedNumber 프로퍼티를 1초에 myNumber까지 증가시킨다.
+                            TweenMax.to(this.$data, 1, {tweenedNumber: this.myNumber})
+                        }
+                    }
+                })
+            }
+           
+        </script>
+        <script>
+            function startTimer(){
+                //남은시간 5초
+                this.restSec = 5;
+                //타이머 시작, 1초(1000밀리초)에 한번씩 countDown()을 실행
+                this.timerObj = setInterval(() => { countDown() }, 1000)  
+            }
+            function countDown() {
+                //1초감소
+                this.restSec --;
+                //0초 이하가 되면 얼럿을 띄우고 타이머 중지
+                if(this.restSec <= 0) {
+                    alert("제한 시간 입니다.");
+                    clearInterval(this.timerObj);
+                }
+            }
+            function myMove(){
+                //movebtn는 x 프로퍼티를 1초에 500 증가시킨다.
+                TweenMax.to('#movebtn',1,{x: "500px"});
+            }
+        </script>
+    
+    </head>
+
+    <body>
+        <div id="app">
+            <input v-model.number="price" type="number">원 x
+            <input v-model.number="count" type="number">개
+            <p>    합계 {{ sum }} 원</p>
+            <p>세금포함 {{ taxIncluded }} 원 </p>
+
+
+            <p>감상은 140자 이내로 입력해 주세요.</p>
+            <textarea v-model="myText"></textarea>
+            <p v-bind:style="{color:computedColor}">남은 글자는 {{remaining}}입니다.</p>
+
+            <input v-model="findWord">
+            <ul>
+                <li v-for="item in findItems">{{item}}</li>
+            </ul>
+
+            <p v-bind:style="{backgroundColor: mixColor}">{{mixColor}}</p>
+            <input type="range" v-model="R" min="0" max="255"><br>
+            <input type="range" v-model="G" min="0" max="255"><br>
+            <input type="range" v-model="B" min="0" max="255"><br>
+
+            <p>금지문자는 [{{forbiddenText}}] </p>
+            <textarea v-model="inputText"></textarea>
+
+            <p>남은 시간이 0초가 되면 얼럿을 띄우는 예제</p>
+            <button onclick="startTimer()">START</button>
+
+            <p>앞으로 {{restSec}}</p><br>
+            <button v-on:click="startTimer">START</button>
+
+            <h2>TweenMax 테스트</h2>
+            <button id="movebtn" type="button" onclick="myMove()">이동</button>
+
+            <p>값은 {{animeNumber}}입니다.</p>
+            <input v-model.number="myNumber" type="number">
+        </div>
+        
+    </body>
+</html>
