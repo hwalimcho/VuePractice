@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Vue.js sample</title>
+        <link rel="stylesheet" href="style.css" >
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+        
+        <script>
+            window.onload =function() {
+                new Vue({
+                    el: "#app",
+                    data: {
+                        myURL: 'www.naver.com',
+                        myIMG: 'img.png',
+                        myAlign1: 'left',
+                        myAlign2: 'right',
+                        myAlign3: 'center',
+
+                        myColor: '#FF0000',
+                        mySize:'150%',
+                        myBackColor:'yellow',
+
+                        myClass: 'blue-underline',
+                        strikeClass : 'strike-through'
+                    },
+                   
+                })
+
+            }
+           
+        </script>
+        <style>
+            .strike-through {
+            
+                background-color: lightgray;
+            }
+            .blue-underline {
+                text-decoration: underline;
+                color: blue;
+            }
+        </style>
+    
+    </head>
+
+    <body>
+        <div id = "app">
+            <p><a v-bind:href="myURL">네이버로 연결</a></p>
+            <p><img v-bind:src="myIMG">face2.png 표시</img></p>
+            <p v-bind:align="myAlign1">텍스트를 왼쪽 정렬</p>
+            <p v-bind:align="myAlign2">텍스트를 오른쪽 정렬</p>
+            <p v-bind:align="myAlign3">텍스트를 가운데 정렬</p>
+            <p v-bind:style="{color:myColor}">인라인 스타일로 글자색을 빨간색으로</p>
+            <p v-bind:style="[{fontSize:mySize},{color:myColor}]">인라인 스타일로 글자크기를 150% 크게 빨간색으로</p>
+            <p v-bind:style="[{fontSize:mySize},{color:myColor},{backgroundColor:myBackColor}]">인라인 스타일로 글자크기를 150% 크게 빨간색으로 배경은 노란색으로</p>
+            <p v-bind:class="myClass">blue-underline class 지정</p>
+            <p v-bind:class="[myClass, strikeClass]">blue-underline, strike-through class 지정</strike></p>
+        </div>
+
+
+        
+    </body>
+</html>

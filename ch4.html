@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Vue.js sample</title>
+        <link rel="stylesheet" href="style.css" >
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+        
+        <script>
+            window.onload =function() {
+                new Vue({
+                    el: "#app",
+                    data: {
+                        /*
+                        myName: '',
+                        myText: '오늘 날씨 좋습니다.',
+                        myCheck: false,
+                        myChecks: [],
+                        myAgree: false,
+                        picked: 'red',
+                        fileName: '',
+                        myColor: '',
+                        myColor2: [],
+                        myText2: '',
+                        myNumber: 0,
+                        myText3: ''*/
+
+                        myName: '',
+                        colorPick:''
+                    },
+                    
+                })
+
+            }
+           
+        </script>
+    
+    </head>
+    <body>
+        <div id = "app">
+            <!--
+            <input v-model="myName" placeholder="이름">
+            <p>나는 {{myName}} 입니다.</p>
+
+            <textarea v-model="myText"></textarea>
+            <p>문장은, {{myText}} </p>
+            <p>문자수는 {{myText.length}}자 입니다.</p>
+            
+            <label><input type="checkbox" v-model="myCheck">
+            체크박스의 상태는 {{myCheck}}</label>
+
+            <br>
+            <label><input type="checkbox" value="red" v-model="myChecks">적</label>
+            <label><input type="checkbox" value="green" v-model="myChecks">녹</label>
+            <label><input type="checkbox" value="blue" v-model="myChecks">청</label>
+            선택한 색은 {{myChecks}}
+
+            <br>       
+            <label><input type="checkbox" v-model="myAgree">동의합니다.</label>
+            <button v-bind:disabled="myAgree==false">송신</button>
+
+            <br>
+            <label><input type="radio" value="red" v-model="picked">적</label>
+            <label><input type="radio" value="green" v-model="picked">녹</label>
+            <label><input type="radio" value="blue" v-model="picked">청</label>
+            {{picked}} 이 선택됨
+
+            <br>
+            <label><input type="radio" value="gazi1.png" v-model="fileName">가지1</label>
+            <label><input type="radio" value="gazi2.png" v-model="fileName">가지2</label>
+            <label><input type="radio" value="gazi3.png" v-model="fileName">가지3</label>
+            <p> {{fileName}} </p>
+            <img v-bind:src="fileName"></img>
+
+            <br>
+            <select v-model="myColor">
+                <option disabled vlaue ="">색을 선택해 주세요</option>
+                <option>red</option>
+                <option>green</option>
+                <option>blue</option>
+                <option>orange</option>
+                <option>brown</option>
+            </select>
+            <p v-bind:style="{color:myColor}">선택한 색은 {{ myColor }} 입니다. </p>
+
+            <br>
+            <select v-model="myColor2" multiple style="width:150px">
+                <option>red</option>
+                <option>green</option>
+                <option>blue</option>
+                <option>orange</option>
+                <option>brown</option>
+            </select>
+            <p>선택한 색은 {{ myColor2 }}입니다.</p>
+
+            <input v-model.lazy="myText2">
+            <p>입력후 표시 : {{ myText2 }}</p>
+
+            <input v-model.number="myNumber" type="number">
+            <p>100을 더해서 표시 : {{ 100 + myNumber }}</p> 
+
+            <input v-model="myNumber" type="number">
+            <p>100을 더해서 표시 : {{ 100 + myNumber }}</p> 
+
+            <input v-model.trim="myText3">
+            <p>앞뒤 공백을 제거 : {{ myText3 }}</p>
+            -->
+
+            <h2>입력폼 활용</h2>
+            <p>이름 :  <input v-model="myName"></p>
+            <p>좋아하는 색은 :</p>
+            <label><input type="radio" value="red" v-model="colorPick">빨강</label><br>
+            <label><input type="radio" value="green" v-model="colorPick">녹색</label><br>
+            <label><input type="radio" value="blue" v-model="colorPick">파랑</label><br>
+            <label><input type="radio" value="yellow" v-model="colorPick">노란색</label><br>
+            <label><input type="radio" value="gray" v-model="colorPick">회색</label><br>
+
+            <p>내 이름은 {{ myName }}이고 좋아하는 색은 {{ colorPick }}입니다.</p>
+
+        </div>
+
+        
+    </body>
+</html>

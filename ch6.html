@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Vue.js sample</title>
+        <link rel="stylesheet" href="style.css" >
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+        
+        <style>
+            table {
+                width: 100%;
+                text-align: left;
+            }
+            table th {
+                padding: 12px;
+                border-bottom: 2px solid darkgray;
+            }
+            table td {
+                padding: 12px;
+            }
+            table tr:nth-of-type(even) {
+                background-color: rgba(0, 0, 225, 0.1);
+            }
+
+        </style>
+        <script>
+            window.onload =function() {
+                new Vue({
+                    el: "#app",
+                    data: {
+                        number_list : [2,3,4,5,6,7,8,9],
+                        show : false
+                    },
+                    methods: {
+                        modifyNumber: function(index){
+                            this.number_list.splice(index, 1, this.number_list[index]+1);
+                        },
+                        deleteNumber: function(index){
+                            this.number_list.splice(index, 1);
+                        },
+                        addNumber: function(){
+                            this.number_list.push(1);
+                        },
+                        sortData: function(){
+                            this.number_list = this.number_list.filter( function(item, idx, array) {
+                                return array.indexOf(item) === idx;
+                            });
+                            this.number_list.sort(function(a,b){
+                                return (a < b ? -1 : 1);
+                            }); 
+                        },
+                        showGuGu: function(){
+                            this.show = true;
+                        }
+                    }
+                    /*
+                    data: {
+                        myVisible: false,
+                        isShow: true,
+                        myArray: ['쨈빵', '멜론빵', '크로와사','슈크림빵'],
+                        objArray: [
+                            {name: '쨈빵', price: 1000},
+                            {name: '멜론빵', price: 1200},
+                            {name: '크로와사', price: 1500}
+                        ],
+                        header:["프로그램언어",2018,2013,2008,2003,1998],
+                        ranking:[
+                            ['Java',1,2,1,1,16],
+                            ['C',2,1,2,2,1],
+                            ['C++',3,4,3,3,2],
+                            ['Python',4,7,6,11,23],
+                            ['JavaScript',7,10,8,7,20]
+                        ],
+                        myyArray :['첫번째', '두번째', '세번째', '네번째', '다섯번째'],
+                        mytArray :['one','two','three','four','five'],
+                        mmyArray :[1,2,3,4,5,6]
+                    },
+                    methods: {
+                        good: function(){
+                            this.isShow = false;
+                        },
+                        addLast: function() {
+                            this.myyArray.push("[맨 뒤에 추가]");
+                        },
+                        addObj: function(index) {
+                            this.myyArray.splice(index, 0, '[추가]');
+                        },
+                        changeObj: function(index) {
+                            this.myyArray.splice(index, 1, '[변경]');
+                        },
+                        deleteObj: function(index) {
+                            this.myyArray.splice(index, 1);
+                        },
+
+                        sortData: function(listdata) {
+                            listdata.sort(function(a,b){
+                                return (a < b ? -1 : 1)
+                            });
+                        },
+                        evenData: function() {
+                            this.mmyArray = this.mmyArray.filter(
+                                function(value) { return value % 2 ==0 ;}
+                            );
+                        }
+                    }*/
+                    
+                })
+
+            }
+           
+        </script>
+    
+    </head>
+
+    <body>
+        <div id = "app">
+            <h2> 숫자 배열 조작과 구구단 출력 </h2>
+            <ul>
+                <li v-for="(item, index) in number_list">{{ item }}
+                <button v-on:click="modifyNumber(index)">변경</button>
+                <button v-on:click="deleteNumber(index)">삭제</button>
+                </li>
+                <br>
+                <button v-on:click="addNumber">추가</button>
+                <button v-on:click="sortData">소트</button>
+                <button v-on:click="showGuGu">구구단보이기</button>
+
+                <ul v-if="show">
+                    <li v-for="item in number_list">
+                        <p v-for="item2 in 9">{{item}}*{{item2}}={{item*item2}}</p>
+                    </li>
+                </ul>
+            </ul>
+            
+            <!--
+            <label><input type="checkbox" v-model="myVisible">표시</label>
+            <p v-if="myVisible">체크박스가 ON</p>
+            <p v-else>체크박스가 OFF</p>
+
+            <button v-if="isShow" v-on:click="good">좋아!</button>
+        
+            <ul>
+                <li v-for="item in myArray">{{ item }}</li>
+            </ul>
+            <ul>
+                <li v-for="item in objArray">{{ item.name }} \{{ item.price }}</li>
+            </ul>
+            <ul>
+                <li v-for="n in 10">{{n}}*5={{n*5}}</li>
+            </ul>
+            <ul>
+                <li v-for="(item, index) in myArray">{{index}}:{{item}}</li>
+            </ul>
+            
+            <h3>관심 받고 있는 언어 랭킹</h3>
+            <table>
+                <thead>
+                     테이블 헤더 반복-
+                    <th v-for="item in header">{{item}}</th>
+                </thead>
+                <tbody>
+                    1행 반복
+                    <tr v-for="line in ranking">
+                        1열 반복
+                        <td v-for="item in line">{{item}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <ul>
+                <li v-for="item in myyArray">{{ item }}</li>
+            </ul>
+            <button v-on:click="addLast">맨 뒤에 추가</button><br>
+            <button v-on:click="addObj(3)">네번째에 추가</button><br>
+            <button v-on:click="changeObj(0)">첫번째를 변경</button><br>
+            <button v-on:click="deleteObj(1)">두번째를 삭제</button><br>
+
+
+            <ul>
+                <li v-for="item in mytArray">{{ item }}</li>
+            </ul>
+            <button v-on:click="sortData(mytArray)">소트</button><br>
+        
+            <ul>
+                <li v-for="item in mmyArray">{{item}}</li>
+            </ul>
+            <button v-on:click="evenData()">짝수만 표시</button>
+        -->
+      
+        </div>
+    </body>
+</html>

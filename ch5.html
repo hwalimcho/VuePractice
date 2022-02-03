@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Vue.js sample</title>
+        <link rel="stylesheet" href="style.css" >
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+        
+        <script>
+            function good(){
+                alert("좋아!");
+            }
+            window.onload =function() {
+                new Vue({
+                    el: "#app",
+                    data: {
+                        /*
+                        count:0,
+                        myText:'hello!'*/
+                        firstNum: 0,
+                        secondNum: 0,
+                        count: 0
+                    },
+                    methods: {
+                        /*
+                        countUp: function(value) {
+                            this.count += value; 
+                        },
+                        oneClick: function(){
+                            this.isClick = true;
+                            good();
+                        },
+                        showAlert: function(){
+                           alert("Shift+ Enter 키를 눌렀습니다.") ;
+                        }*/
+                        addcal: function(){
+                            this.count = this.firstNum + this.secondNum
+                        },
+                        subcal: function(){
+                            this.count = this.firstNum - this.secondNum
+                        },
+                        mulcal: function(){
+                            this.count = this.firstNum * this.secondNum
+                        },
+                        divcal: function(){
+                            this.count = this.firstNum / this.secondNum
+                        }
+                        
+                        
+                    }
+                })
+
+            }
+           
+        </script>
+    
+    </head>
+
+    <body>
+        <div id = "app">
+            <!--
+            <p>{{ count }} </p>
+            <button v-on:click="countUp">1씩증가</button>
+            
+            <button value="good" v-bind:disabled="isClick" v-on:click="oneClick">좋아!</button>
+        
+            <br><br><br><br><br>
+            <p> {{ count }} </p>
+            <button v-on:click="countUp(3)">3증가</button>
+            <button v-on:click="countUp(10)">10증가</button>
+            <button v-on:click="countUp(100)">100증가</button>
+
+            <input v-on:keyup.enter.shift="showAlert" v-model="myText">
+            <p>{{ myText }}</p>-->
+
+            <h2>간단한 계산기</h2>
+            <input v-model.number="firstNum">
+            <input v-model.number="secondNum">
+            <br><br>
+            <button v-on:click = "addcal">덧셈 계산</button>
+            <button v-on:click = "subcal">뺄셈 계산</button>
+            <button v-on:click = "mulcal">곱셈 계산</button>
+            <button v-on:click = "divcal">나눗셈 계산</button>
+        
+            <p>결과는 {{ count }} 입니다.</p>
+        </div>
+
+
+        
+    </body>
+</html>
